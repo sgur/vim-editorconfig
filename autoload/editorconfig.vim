@@ -208,6 +208,15 @@ function! s:property_insert_final_newline(value)
   return []
 endfunction
 
+function! s:property_max_line_length(value)
+  " number
+  if type(a:value) == type(0)
+    return ['setlocal fileencoding=' . a:value]
+  endif
+  echoerr printf('editroconfig: unsupported value: max_line_length=%s', a:value)
+  return []
+endfunction
+
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
