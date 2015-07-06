@@ -159,6 +159,7 @@ function! s:property_tab_width(value)
 endfunction
 
 function! s:property_end_of_line(value)
+  " 'lf', 'cr' or 'crlf'
   try
     return s:end_of_line[tolower(a:value)]
   catch /^Vim\%((\a\+)\)\=:E716/
@@ -174,11 +175,8 @@ let s:end_of_line =
 
 function! s:property_charset(value)
   " encoding
-  try
-    return ['setlocal fileencoding=' . a:value]
-  endtry
-  echoerr printf('editorconfig: unsupported value: charset=%s', a:value)
-  return []
+  return [ 'setlocal fileencoding=' . a:value
+        \ , 'setlocal fileencodings^=' . a:value]
 endfunction
 
 function! s:property_trim_trailing_whitespace(value)
