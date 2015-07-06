@@ -11,7 +11,7 @@ let g:loaded_editorconfig = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
-let g:editorconfig_filename = get(g:, 'editorconfig_filename', '.editorconfig')
+let g:editorconfig_root_chdir = get(g:, 'editorconfig_root_chdir', 0)
 
 augroup plugin-editorconfig
   autocmd!

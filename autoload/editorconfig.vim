@@ -3,13 +3,14 @@ scriptencoding utf-8
 let s:save_cpo = &cpo
 set cpo&vim
 
+let s:editorconfig = '.editorconfig'
 
 function! editorconfig#load(path)
   call s:apply(a:path)
 endfunction
 
 function! s:scan(path)
-  let editorconfig = findfile(g:editorconfig_filename, fnameescape(a:path) . ';')
+  let editorconfig = findfile(s:editorconfig, fnameescape(a:path) . ';')
   if empty(editorconfig) || !filereadable(editorconfig) || a:path is# fnamemodify(a:path, ':h')
     return []
   endif
@@ -17,7 +18,6 @@ function! s:scan(path)
   let base_path = fnamemodify(editorconfig, ':p:h')
   let [is_root, _] = s:parse(s:trim(readfile(editorconfig)), base_path)
   if is_root
-    echo base_path
     call s:set_cwd(base_path)
     return _
   endif
@@ -74,7 +74,9 @@ function! s:remove_comment(line)
 endfunction
 
 function! s:set_cwd(dir)
-  lcd `=a:dir`
+  if g:editorconfig_root_chdir
+    lcd `=a:dir`
+  endif
 endfunction
 
 function! s:apply(path)
