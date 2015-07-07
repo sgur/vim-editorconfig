@@ -1,0 +1,143 @@
+*editorconfig.txt*	EditorConfig for Vim
+
+Version: 0.3.0
+Author : sgur
+License: MIT License
+
+==============================================================================
+CONTENTS					*editorconfig-contents*
+
+INTRODUCTION			|editorconfig-introduction|
+USAGE				|editorconfig-usage|
+SUPPORTED PROPERTIES		|editorconfig-properties|
+INTERFACE			|editorconfig-interface|
+  FUNCTIONS			  |editorconfig-functions|
+CUSTOMIZING			|editorconfig-customizing|
+EXAMPLES			|editorconfig-examples|
+CHANGELOG			|editorconfig-changelog|
+
+
+
+==============================================================================
+INTRODUCTION					*editorconfig-introduction*
+
+*editorconfig* is a Vim plugin to support EditorConfig
+
+
+Requirements:
+- Vim 7.4 or later
+
+Latest version:
+https://github.com/sgur/vim-editorconfig
+
+
+
+==============================================================================
+USAGE						*editorconfig-usage*
+
+Put a ".editorconfig" for the files below the certain directory.
+
+After that, whenever you open some files, properties specified in
+.editorconfig are applied to the buffer.
+
+------------------------------------------------------------------------------
+SUPPORTED PROPERTIES				*editorconfig-properties*
+
+See https://github.com/editorconfig/editorconfig/wiki/EditorConfig-Properties
+for details.
+
+- charset
+- end_of_line
+- indent_size
+- indent_style
+- insert_final_newline
+- max_line_lengwth
+- root
+- tab_width
+- trim_trailing_whitespace
+
+==============================================================================
+INTERFACE					*editorconfig-interface*
+
+------------------------------------------------------------------------------
+FUNCTIONS					*localrc-functions*
+
+editorconfig#load({fnames})	*editorconfig#load()*
+	Load settings from .editorconfig
+
+
+
+==============================================================================
+CUSTOMIZING					*editorconfig-customizing*
+
+g:editorconfig_root_chdir			*g:editorconfig_root_chdir*
+	If this option is enabled, The directory where 'root = true' is
+	specified in the .editorconfig is used for|lcd|after opening buffer.
+
+	default: 0
+
+>
+ let g:editorconfig_root_chdir = 1
+<
+
+
+
+==============================================================================
+EXAMPLES					*localrc-examples*
+
+Examples of configuration file.
+>
+	# EditorConfig is awesome: http://EditorConfig.org
+
+	# top-most EditorConfig file
+	root = true
+
+	# Unix-style newlines with a newline ending every file
+	[*]
+	end_of_line = lf
+	insert_final_newline = true
+
+	# Matches multiple files with brace expansion notation
+	# Set default charset
+	[*.{js,py}]
+	charset = utf-8
+
+	# 4 space indentation
+	[*.py]
+	indent_style = space
+	indent_size = 4
+
+	# Tab indentation (no size specified)
+	[Makefile]
+	indent_style = tab
+
+	# Indentation override for all JS under lib directory
+	[lib/**.js]
+	indent_style = space
+	indent_size = 2
+
+	# Matches the exact files either package.json or .travis.yml
+	[{package.json,.travis.yml}]
+	indent_style = space
+	indent_size = 2
+<
+
+
+
+==============================================================================
+CHANGELOG					*localrc-changelog*
+
+0.3.0
+	- Add omnifunc for .editorconfig
+	- Add help
+	- Support max_line_length property
+
+0.2.0
+	- New option:|g:editorconfig_root_chdir|
+
+0.1.0
+	- Initial version.
+
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl
