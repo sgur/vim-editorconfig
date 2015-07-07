@@ -5,10 +5,28 @@ set cpo&vim
 
 let s:editorconfig = '.editorconfig'
 
+let g:editorconfig#default_properties =
+      \ [ 'charset'
+      \ , 'end_of_line'
+      \ , 'indent_size'
+      \ , 'indent_style'
+      \ , 'insert_final_newline'
+      \ , 'max_line_length'
+      \ , 'root'
+      \ , 'tab_width'
+      \ , 'trim_trailing_whitespace'
+      \ ]
+
+" {{{1 Interfaces
 function! editorconfig#load(path)
   call s:apply(a:path)
 endfunction
 
+function! editorconfig#properties()
+  return g:editorconfig#default_properties + keys(get(g:, 'editorconfig_properties', {}))
+endfunction
+
+" {{{1 Inner functions
 function! s:scan(path)
   let editorconfig = findfile(s:editorconfig, fnameescape(a:path) . ';')
   if empty(editorconfig) || !filereadable(editorconfig) || a:path is# fnamemodify(a:path, ':h')
@@ -80,9 +98,11 @@ function! s:set_cwd(dir)
 endfunction
 
 function! s:apply(path)
-  let path = fnamemodify(a:path, ':p')
-  let config = s:scan(fnamemodify(path, ':h'))
-  let b:editorconfig = s:filter_matched(path, config)
+  let filepath = fnamemodify(a:path, ':p')
+  let config = s:scan(fnamemodify(filepath, ':h'))
+  let props = s:filter_matched(config, filepath)
+  let supported = editorconfig#properties()
+  let b:editorconfig = filter(props, 'index(supported, v:key) > -1')
   call s:invoke_commands(b:editorconfig)
 endfunction
 
@@ -92,9 +112,9 @@ function! s:invoke_commands(property)
   endfor
 endfunction
 
-function! s:filter_matched(path, properties)
+function! s:filter_matched(config, path)
   let _ = {}
-  for p in filter(copy(a:properties), 'a:path =~ s:regexp(v:val[0])')
+  for p in filter(copy(a:config), 'a:path =~ s:regexp(v:val[0])')
     call extend(_, p[1], "keep")
   endfor
   return _
@@ -215,6 +235,7 @@ function! s:property_max_line_length(value)
   return []
 endfunction
 
+" 1}}}
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
