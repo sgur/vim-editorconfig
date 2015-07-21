@@ -16,6 +16,7 @@ let g:editorconfig#default_properties =
       \ , 'tab_width'
       \ , 'trim_trailing_whitespace'
       \ ]
+let s:scriptdir = expand('<sfile>:p:r')
 
 " {{{1 Interfaces
 function! editorconfig#load(path)
@@ -25,6 +26,15 @@ endfunction
 function! editorconfig#properties()
   return g:editorconfig#default_properties + keys(get(g:, 'editorconfig_properties', {}))
 endfunction
+
+function! editorconfig#omnifunc(findstart, base) "{{{
+  if a:findstart
+    let pos = match(getline('.'), '\%' . col('.') . 'c\k\+\zs\s*=')
+    return pos+1
+  else
+    return filter(sort(s:properties()), 'stridx(v:val, a:base) == 0')
+  endif
+endfunction "}}}
 
 " {{{1 Inner functions
 function! s:scan(path)
@@ -81,6 +91,14 @@ endfunction
 function! s:eval(val)
   return type(a:val) == type('') && a:val =~# '^\d\+$' ? eval(a:val) : a:val
 endfunction
+
+function! s:properties() "{{{
+  return map(s:globpath(s:scriptdir, '*.vim'), 'fnamemodify(v:val, ":t:r")')
+endfunction "}}}
+
+function! s:globpath(path, expr) "{{{
+  return has('patch-7.4.279') ? globpath(a:path, a:expr, 0, 1) : split(globpath(a:path, a:expr, 1))
+endfunction "}}}
 
 function! s:trim(lines)
   return filter(map(a:lines, 's:remove_comment(v:val)'), '!empty(v:val)')
