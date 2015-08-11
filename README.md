@@ -21,12 +21,13 @@ Description
 V.S.
 ----
 
-[editorconfig/editorconfig-vim](https://github.com/editorconfig/editorconfig-vim)
+- [editorconfig/editorconfig-vim](https://github.com/editorconfig/editorconfig-vim)
 
 [editorconfig-vim](https://github.com/editorconfig/editorconfig-vim) is official vim plugin for EditorConfig.
 This requires `if_python` interface or external python interpreter.
 
-[vim-editorconfig](https://github.com/sgur/vim-editorconfig) is written in pure vimscript. It doesn't require another interfaces
+[vim-editorconfig](https://github.com/sgur/vim-editorconfig) is written in pure vimscript. 
+You can use editorconfig without any external interfaces such as `if_python`.
 
 Usage
 -----
