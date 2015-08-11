@@ -1,6 +1,6 @@
 *editorconfig.txt*	EditorConfig for Vim
 
-Version: 0.3.0
+Version: 0.5.0
 Author : sgur
 License: MIT License
 
@@ -60,7 +60,7 @@ for details.
 INTERFACE					*editorconfig-interface*
 
 ------------------------------------------------------------------------------
-FUNCTIONS					*localrc-functions*
+FUNCTIONS					*editorconfig-functions*
 
 editorconfig#load({fnames})	*editorconfig#load()*
 	Load settings from .editorconfig
@@ -80,10 +80,16 @@ g:editorconfig_root_chdir			*g:editorconfig_root_chdir*
  let g:editorconfig_root_chdir = 1
 <
 
+g:editorconfig_verbose
+	If enabled, Parse errors are reported by|echoerr|
 
+	defualt: 0
+>
+ let g:editorconfig_verbose = 1
+<
 
 ==============================================================================
-EXAMPLES					*localrc-examples*
+EXAMPLES					*editorconfig-examples*
 
 Examples of configuration file.
 >
@@ -125,8 +131,11 @@ Examples of configuration file.
 
 
 ==============================================================================
-CHANGELOG					*localrc-changelog*
+CHANGELOG					*editorconfig-changelog*
 
+0.5.0
+	- Tested through "editorconfig/editorconfig-plugin-tests"
+	- Suppress errors unless g:editorconfig_verbose
 0.4.0
 	- Improve insert_final_newline support using|fixendofline|
 	- Fix bugs for buffer-local autocmds

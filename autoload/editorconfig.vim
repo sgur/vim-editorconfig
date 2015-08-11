@@ -75,7 +75,6 @@ function! s:parse(lines) "{{{
   endwhile
   return [get(is_root, 'root', 'false') == 'true', _]
 endfunction "}}}
-echo s:parse(['root = false', '[*', 'indent_size = 2'])
 
 " Parse file glob pattern
 " >>> echo s:parse_pattern([])

@@ -1,5 +1,5 @@
 " editorconfig
-" Version: 0.4.0
+" Version: 0.5.0
 " Author: sgur
 " License: MIT License
 
@@ -18,7 +18,7 @@ augroup plugin-editorconfig
   autocmd VimEnter * nested
         \ if !argc() | call editorconfig#load() | endif
   autocmd BufNewFile,BufReadPost * nested
-        \ call editorconfig#load()
+        \ if isdirectory(expand('%:p:h')) | call editorconfig#load() | endif
 augroup END
 
 let &cpo = s:save_cpo
