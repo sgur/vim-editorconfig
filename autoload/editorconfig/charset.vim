@@ -8,6 +8,11 @@ scriptencoding utf-8
 
 function! editorconfig#charset#execute(value)
   " encoding
-  execute 'setlocal fileencoding=' . a:value
+  if a:value is# 'utf-8-bom'
+    setlocal fileencoding=utf-8
+    setlocal bomb
+  else
+    execute 'setlocal fileencoding=' . a:value
+  endif
 endfunction
 " 1}}}
