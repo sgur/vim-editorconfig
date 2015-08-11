@@ -10,7 +10,7 @@ function! editorconfig#max_line_length#execute(value)
   " number
   if type(a:value) == type(0)
     execute 'setlocal textwidth=' . a:value
-  else
+  elseif get(g:, 'editorconfig_verbose', 0)
     echoerr printf('editroconfig: unsupported value: max_line_length=%s', a:value)
   endif
 endfunction

@@ -13,17 +13,17 @@ function! editorconfig#insert_final_newline#execute(value)
   if exists('&fixendofline')
     let &l:fixendofline = value
   elseif !value
-      autocmd plugin-editorconfig-local BufWritePre <buffer> call s:on_bufwritepre_insert_final_newline()
-      autocmd plugin-editorconfig-local BufWritePost <buffer> call s:on_bufwritepost_insert_final_newline()
+    autocmd plugin-editorconfig-local BufWritePre <buffer> call s:on_bufwritepre_insert_final_newline()
+    autocmd plugin-editorconfig-local BufWritePost <buffer> call s:on_bufwritepost_insert_final_newline()
   endif
 endfunction
 
 function! s:bool(value) "{{{
-  if a:value ==? 'true'
+  if a:value is# 'true'
     return 1
-  else a:value ==? 'false'
+  elseif a:value is# 'false'
     return 0
-  else
+  elseif get(g:, 'editorconfig_verbose', 0)
     echoerr printf('editroconfig: unsupported value: insert_final_newline=%s', a:value)
   endif
 endfunction "}}}

@@ -16,7 +16,7 @@ function! editorconfig#indent_size#execute(value)
     execute 'setlocal shiftwidth=' . a:value
   elseif a:value is# 'tab'
     execute 'setlocal shiftwidth=0'
-  else
+  elseif get(g:, 'editorconfig_verbose', 0)
     echoerr printf('editorconfig: unsupported value: indent_size=%s', a:value)
   endif
 endfunction

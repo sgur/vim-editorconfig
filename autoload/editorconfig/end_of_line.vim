@@ -12,7 +12,9 @@ function! editorconfig#end_of_line#execute(value)
   try
     execute s:end_of_line[tolower(a:value)]
   catch /^Vim\%((\a\+)\)\=:E716/
-    echoerr printf('editorconfig: unsupported value: end_of_line=%s', a:value)
+    if get(g:, 'editorconfig_verbose', 0)
+      echoerr printf('editorconfig: unsupported value: end_of_line=%s', a:value)
+    endif
   endtry
 endfunction
 

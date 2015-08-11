@@ -66,19 +66,16 @@ endfunction "}}}
 " Vim(echoerr):editorconfig: failed to parse [*
 
 function! s:parse(lines) "{{{
-  try
-    let [unparsed, is_root] = s:parse_properties(a:lines)
-    let _ = []
-    while len(unparsed) > 0
-      let [unparsed, pattern] = s:parse_pattern(unparsed)
-      let [unparsed, properties] = s:parse_properties(unparsed)
-      let _ += [[pattern, properties]]
-    endwhile
-    return [get(is_root, 'root', 'false') == 'true', _]
-  catch /^Vim\%((\a\+)\)\=editorconfig/
-    return [1, []]
-  endtry
+  let [unparsed, is_root] = s:parse_properties(a:lines)
+  let _ = []
+  while len(unparsed) > 0
+    let [unparsed, pattern] = s:parse_pattern(unparsed)
+    let [unparsed, properties] = s:parse_properties(unparsed)
+    let _ += [[pattern, properties]]
+  endwhile
+  return [get(is_root, 'root', 'false') == 'true', _]
 endfunction "}}}
+echo s:parse(['root = false', '[*', 'indent_size = 2'])
 
 " Parse file glob pattern
 " >>> echo s:parse_pattern([])
@@ -94,8 +91,10 @@ function! s:parse_pattern(lines) "{{{
   if !empty(m)
     return [a:lines[1 :], m]
   else
-    echoerr printf('editorconfig: failed to parse %s', a:lines[0])
-    return [[], '_']
+    if get(g:, 'editorconfig_verbose', 0)
+      echoerr printf('editorconfig: failed to parse %s', a:lines[0])
+    endif
+    return [[], '']
   endif
 endfunction "}}}
 
@@ -118,8 +117,10 @@ function! s:parse_properties(lines) "{{{
     endif
     let splitted = split(line, '\s*=\s*')
     if len(splitted) < 2
-      echoerr printf('editorconfig: failed to parse %s', line)
-      break
+      if get(g:, 'editorconfig_verbose', 0)
+        echoerr printf('editorconfig: failed to parse %s', line)
+      endif
+      return [[], {}]
     endif
     let [key, val] = splitted
     let _[key] = s:eval(val)
@@ -172,7 +173,7 @@ function! s:apply(property) "{{{
     try
       call editorconfig#{tolower(key)}#execute(val)
     catch /^Vim\%((\a\+)\)\=:E117/
-      " echohl WarningMsg | echomsg 'editorconfig: Unsupported property:' key | echohl NONE
+      echohl WarningMsg | echomsg 'editorconfig: Unsupported property:' key | echohl NONE
     endtry
   endfor
 endfunction "}}}

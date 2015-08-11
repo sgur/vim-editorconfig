@@ -14,7 +14,9 @@ function! editorconfig#indent_style#execute(value)
   try
     execute s:indent_style[a:value]
   catch /^Vim\%((\a\+)\)\=:E716/
-    echoerr printf('editorconfig: unsupported value: indent_style=%s', a:value)
+    if get(g:, 'editorconfig_verbose', 0)
+      echoerr printf('editorconfig: unsupported value: indent_style=%s', a:value)
+    endif
   endtry
 endfunction
 
