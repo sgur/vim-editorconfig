@@ -1,5 +1,12 @@
 scriptencoding utf-8
 
+" insert_final_newline {{{1
+
+" After Vim 7.4.785:
+"  Use &fixendofline
+" Before 7.4.784:
+"  Use BufWritePre and BufWritePost event to manipulate &binary and &endofline
+
 function! editorconfig#insert_final_newline#execute(value)
   " 'true' or 'false'
   let value = s:bool(a:value)
@@ -47,4 +54,5 @@ function! s:on_bufwritepost_insert_final_newline() "{{{
     call winrestview(s:save_view)
   endif
 endfunction "}}}
+" 1}}}
 

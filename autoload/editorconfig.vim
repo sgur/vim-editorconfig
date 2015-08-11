@@ -8,7 +8,12 @@ let s:editorconfig = '.editorconfig'
 let s:scriptdir = expand('<sfile>:p:r')
 
 " {{{1 Interfaces
-function! editorconfig#load(path) "{{{
+
+" >>> call editorconfig#load(expand('<sfile>'))
+"
+" >>> call editorconfig#load(fnamemodify("./editorconfig.vim", ":p"))
+"
+function! editorconfig#load(path)
   augroup plugin-editorconfig-local
     autocmd!
   augroup END
@@ -16,16 +21,16 @@ function! editorconfig#load(path) "{{{
   let props = s:filter_matched(s:scan(fnamemodify(filepath, ':h')), filepath)
   if empty(props) | return | endif
   call s:apply(props)
-endfunction "}}}
+endfunction
 
-function! editorconfig#omnifunc(findstart, base) "{{{
+function! editorconfig#omnifunc(findstart, base)
   if a:findstart
     let pos = match(getline('.'), '\%' . col('.') . 'c\k\+\zs\s*=')
     return pos+1
   else
     return filter(sort(s:properties()), 'stridx(v:val, a:base) == 0')
   endif
-endfunction "}}}
+endfunction
 
 " {{{1 Inner functions
 function! s:scan(path) "{{{
