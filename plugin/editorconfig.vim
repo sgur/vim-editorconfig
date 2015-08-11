@@ -15,8 +15,8 @@ let g:editorconfig_root_chdir = get(g:, 'editorconfig_root_chdir', 0)
 
 augroup plugin-editorconfig
   autocmd!
-  autocmd VimEnter * nested
-        \ if !argc() | call editorconfig#load() | endif
+  " autocmd VimEnter * nested
+  "       \ if !argc() | call editorconfig#load() | endif
   autocmd BufNewFile,BufReadPost * nested
         \ if isdirectory(expand('%:p:h')) | call editorconfig#load() | endif
 augroup END
