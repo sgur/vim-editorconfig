@@ -9,13 +9,12 @@ CONTENTS					*editorconfig-contents*
 
 INTRODUCTION			|editorconfig-introduction|
 USAGE				|editorconfig-usage|
-SUPPORTED PROPERTIES		|editorconfig-properties|
+  SUPPORTED PROPERTIES		  |editorconfig-properties|
 INTERFACE			|editorconfig-interface|
   FUNCTIONS			  |editorconfig-functions|
 CUSTOMIZING			|editorconfig-customizing|
 EXAMPLES			|editorconfig-examples|
 CHANGELOG			|editorconfig-changelog|
-
 
 
 ==============================================================================
