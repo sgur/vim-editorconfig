@@ -6,7 +6,7 @@ scriptencoding utf-8
 " >>> echo &tabstop
 " 8
 
-function! editorconfig#tab_width#execute(value)
+function! editorconfig#tab_width#execute(value) abort
   " [:digit:]+
   if type(a:value) == type(0)
     execute 'setlocal tabstop=' . a:value

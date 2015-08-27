@@ -7,7 +7,7 @@ scriptencoding utf-8
 " >>> call editorconfig#end_of_line#execute('lfcr')
 " Vim(echoerr):editorconfig: unsupported value: end_of_line=lfcr
 
-function! editorconfig#end_of_line#execute(value)
+function! editorconfig#end_of_line#execute(value) abort
   " 'lf', 'cr' or 'crlf'
   try
     execute s:end_of_line[tolower(a:value)]

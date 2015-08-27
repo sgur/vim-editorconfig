@@ -6,7 +6,7 @@ scriptencoding utf-8
 " >>> echo &textwidth
 " 78
 
-function! editorconfig#max_line_length#execute(value)
+function! editorconfig#max_line_length#execute(value) abort
   " number
   if type(a:value) == type(0)
     execute 'setlocal textwidth=' . a:value

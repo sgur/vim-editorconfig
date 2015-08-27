@@ -7,7 +7,7 @@ scriptencoding utf-8
 " Before 7.4.784:
 "  Use BufWritePre and BufWritePost event to manipulate &binary and &endofline
 
-function! editorconfig#insert_final_newline#execute(value)
+function! editorconfig#insert_final_newline#execute(value) abort
   " 'true' or 'false'
   let value = s:bool(a:value)
   if exists('&fixendofline')
@@ -18,7 +18,7 @@ function! editorconfig#insert_final_newline#execute(value)
   endif
 endfunction
 
-function! s:bool(value) "{{{
+function! s:bool(value) abort "{{{
   if a:value is# 'true'
     return 1
   elseif a:value is# 'false'
@@ -29,25 +29,25 @@ function! s:bool(value) "{{{
 endfunction "}}}
 
 " http://vim.wikia.com/wiki/Preserve_missing_end-of-line_at_end_of_text_files
-function! s:on_bufwritepre_insert_final_newline() "{{{
+function! s:on_bufwritepre_insert_final_newline() abort "{{{
   let s:save_binary = &binary
   if !&endofline && !&binary
     let s:save_view = winsaveview()
     setlocal binary
-    if (&fileformat == "dos" || &fileformat == "mac") && line('$') > 1
+    if (&fileformat ==# 'dos' || &fileformat ==# 'mac') && line('$') > 1
       undojoin | execute "silent 1,$-1normal! A\<C-v>\<C-m>"
     endif
-    if &fileformat == "mac"
+    if &fileformat ==# 'mac'
       undojoin | %join!
     endif
   endif
 endfunction "}}}
 
-function! s:on_bufwritepost_insert_final_newline() "{{{
+function! s:on_bufwritepost_insert_final_newline() abort "{{{
   if !&endofline && ! s:save_binary
-    if &fileformat == "dos" && line('$') > 1
+    if &fileformat ==# 'dos' && line('$') > 1
       silent! undojoin | silent 1,$-1s/\r$//e
-    elseif &fileformat == "mac"
+    elseif &fileformat ==# 'mac'
       silent! undojoin | silent %s/\r/\r/ge
     endif
     setlocal nobinary

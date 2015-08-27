@@ -12,7 +12,7 @@ scriptencoding utf-8
 " >>> bwipeout test.text
 " >>> execute "normal! :call delete('./test.text')\<CR>"
 
-function! editorconfig#trim_trailing_whitespace#execute(value)
+function! editorconfig#trim_trailing_whitespace#execute(value) abort
   " 'true' or 'false'
   if a:value is# 'true'
     autocmd plugin-editorconfig-local BufWritePre <buffer> call s:do_trim_trailing_whitespace()
@@ -22,7 +22,7 @@ function! editorconfig#trim_trailing_whitespace#execute(value)
   endif
 endfunction
 
-function! s:do_trim_trailing_whitespace() "{{{
+function! s:do_trim_trailing_whitespace() abort "{{{
   let view = winsaveview()
   try
     %s/\s\+$//e

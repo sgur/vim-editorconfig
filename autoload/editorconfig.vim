@@ -11,7 +11,7 @@ let s:scriptdir = expand('<sfile>:p:r')
 
 " >>> call editorconfig#load()
 "
-function! editorconfig#load()
+function! editorconfig#load() abort
   augroup plugin-editorconfig-local
     autocmd!
   augroup END
@@ -23,7 +23,7 @@ function! editorconfig#load()
   call s:apply(props)
 endfunction
 
-function! editorconfig#omnifunc(findstart, base)
+function! editorconfig#omnifunc(findstart, base) abort
   if a:findstart
     let pos = match(getline('.'), '\%' . col('.') . 'c\k\+\zs\s*=')
     return pos+1
@@ -40,7 +40,7 @@ endfunction
 " >>> echo s:config.insert_final_newline s:config.indent_style s:config.indent_size
 " true space 2
 
-function! s:scan(path) "{{{
+function! s:scan(path) abort "{{{
   let editorconfig = findfile(s:editorconfig, fnameescape(a:path) . ';')
   if empty(editorconfig) || !filereadable(editorconfig) || a:path is# fnamemodify(a:path, ':h')
     return []
@@ -65,7 +65,7 @@ endfunction "}}}
 " >>> echo s:parse(['root = false', '[*', 'indent_size = 2'])
 " Vim(echoerr):editorconfig: failed to parse [*
 
-function! s:parse(lines) "{{{
+function! s:parse(lines) abort "{{{
   let [unparsed, is_root] = s:parse_properties(a:lines)
   let _ = []
   while len(unparsed) > 0
@@ -73,7 +73,7 @@ function! s:parse(lines) "{{{
     let [unparsed, properties] = s:parse_properties(unparsed)
     let _ += [[pattern, properties]]
   endwhile
-  return [get(is_root, 'root', 'false') == 'true', _]
+  return [get(is_root, 'root', 'false') ==# 'true', _]
 endfunction "}}}
 
 " Parse file glob pattern
@@ -84,7 +84,7 @@ endfunction "}}}
 " >>> echo s:parse_pattern(['[]', ''])
 " Vim(echoerr):editorconfig: failed to parse []
 
-function! s:parse_pattern(lines) "{{{
+function! s:parse_pattern(lines) abort "{{{
   if !len(a:lines) | return [[], ''] | endif
   let m = matchstr(a:lines[0], '^\[\zs.\+\ze\]$')
   if !empty(m)
@@ -105,7 +105,7 @@ endfunction "}}}
 " >>> echo s:parse_properties(['indent_size=2', '[*]'])
 " [['[*]'], {'indent_size': 2}]
 
-function! s:parse_properties(lines) "{{{
+function! s:parse_properties(lines) abort "{{{
   let _ = {}
   if !len(a:lines) | return [[], _] | endif
   for i in range(len(a:lines))
@@ -132,22 +132,22 @@ endfunction "}}}
 " >>> echo s:eval('true')
 " true
 
-function! s:eval(val) "{{{
+function! s:eval(val) abort "{{{
   return type(a:val) == type('') && a:val =~# '^\d\+$' ? eval(a:val) : a:val
 endfunction "}}}
 
-function! s:properties() "{{{
+function! s:properties() abort "{{{
   return map(s:globpath(s:scriptdir, '*.vim'), 'fnamemodify(v:val, ":t:r")')
 endfunction "}}}
 
-function! s:globpath(path, expr) "{{{
+function! s:globpath(path, expr) abort "{{{
   return has('patch-7.4.279') ? globpath(a:path, a:expr, 0, 1) : split(globpath(a:path, a:expr, 1))
 endfunction "}}}
 
 " >>> echo s:trim(['# ', 'foo', '', 'bar'])
 " ['foo', 'bar']
 
-function! s:trim(lines) "{{{
+function! s:trim(lines) abort "{{{
   return filter(map(a:lines, 's:remove_comment(v:val)'), '!empty(v:val)')
 endfunction "}}}
 
@@ -156,18 +156,18 @@ endfunction "}}}
 " >>> echo s:remove_comment('bar')
 " bar
 
-function! s:remove_comment(line) "{{{
+function! s:remove_comment(line) abort "{{{
   let pos = match(a:line, '[;#].\+')
   return pos == -1 ? a:line : pos == 0 ? '' : a:line[: pos-1]
 endfunction "}}}
 
-function! s:set_cwd(dir) "{{{
+function! s:set_cwd(dir) abort "{{{
   if g:editorconfig_root_chdir
     lcd `=a:dir`
   endif
 endfunction "}}}
 
-function! s:apply(property) "{{{
+function! s:apply(property) abort "{{{
   for [key, val] in items(a:property)
     try
       call editorconfig#{tolower(key)}#execute(val)
@@ -177,13 +177,13 @@ function! s:apply(property) "{{{
   endfor
 endfunction "}}}
 
-function! s:filter_matched(rule, path) "{{{
+function! s:filter_matched(rule, path) abort "{{{
   let _ = {}
   call map(filter(copy(a:rule), 'a:path =~ s:regexp(v:val[0])'), 'extend(_, v:val[1], "keep")')
   return _
 endfunction "}}}
 
-function! s:regexp(pattern) "{{{
+function! s:regexp(pattern) abort "{{{
   let pattern = escape(a:pattern, '.\')
   for rule in s:regexp_rules
     let pattern = substitute(pattern, rule[0], rule[1], 'g')

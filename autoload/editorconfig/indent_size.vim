@@ -10,7 +10,7 @@ scriptencoding utf-8
 " >>> echo &shiftwidth
 " 0
 
-function! editorconfig#indent_size#execute(value)
+function! editorconfig#indent_size#execute(value) abort
   " [:digit:]+ or 'tab'
   if type(a:value) == type(0)
     execute 'setlocal shiftwidth=' . a:value

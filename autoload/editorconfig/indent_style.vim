@@ -10,7 +10,7 @@ scriptencoding utf-8
 " >>> echo &expandtab
 " 1
 
-function! editorconfig#indent_style#execute(value)
+function! editorconfig#indent_style#execute(value) abort
   try
     execute s:indent_style[a:value]
   catch /^Vim\%((\a\+)\)\=:E716/
