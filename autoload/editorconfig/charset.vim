@@ -8,7 +8,7 @@ scriptencoding utf-8
 
 function! editorconfig#charset#execute(value) abort
   " encoding
-  if a:value is# 'utf-8-bom'
+  if a:value is? 'utf-8-bom'
     setlocal fileencoding=utf-8
     setlocal bomb
   else
