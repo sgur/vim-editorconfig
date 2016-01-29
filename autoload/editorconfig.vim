@@ -169,7 +169,7 @@ endfunction "}}}
 " bar
 
 function! s:remove_comment(line) abort "{{{
-  let pos = match(a:line, '[;#].\+')
+  let pos = match(a:line, '\s*[;#].\+')
   return pos == -1 ? a:line : pos == 0 ? '' : a:line[: pos-1]
 endfunction "}}}
 
