@@ -54,6 +54,20 @@ for details.
 - root
 - tab_width
 - trim_trailing_whitespace
+- local_vimrc
+
+local_vimrc
+-----------
+
+The script specified in local_vimrc is loaded whenever you edit files
+which are matched with the pattern.
+
+>
+	[*.md]
+	local_vimrc = .local_vimrc
+<
+
+This idea comes from thinca/vim-localrc.
 
 ==============================================================================
 INTERFACE					*editorconfig-interface*
@@ -63,8 +77,6 @@ FUNCTIONS					*editorconfig-functions*
 
 editorconfig#load({fnames})	*editorconfig#load()*
 	Load settings from .editorconfig
-
-
 
 ==============================================================================
 CUSTOMIZING					*editorconfig-customizing*
