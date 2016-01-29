@@ -109,11 +109,22 @@ function! s:parse_properties(lines) abort "{{{
   let _ = {}
   if !len(a:lines) | return [[], _] | endif
   for i in range(len(a:lines))
+
     let line = a:lines[i]
+
+    " Parse comments
+    let m = matchstr(line, '^#')
+    if !empty(m)
+      return [[], {}]
+    endif
+
+    " Parse file formats
     let m = matchstr(line, '^\[\zs.\+\ze\]$')
     if !empty(m)
       return [a:lines[i :], _]
     endif
+
+    " Parse properties
     let splitted = split(line, '\s*=\s*')
     if len(splitted) < 2
       if get(g:, 'editorconfig_verbose', 0)
@@ -123,6 +134,7 @@ function! s:parse_properties(lines) abort "{{{
     endif
     let [key, val] = splitted
     let _[key] = s:eval(val)
+
   endfor
   return [a:lines[i+1 :], _]
 endfunction "}}}
