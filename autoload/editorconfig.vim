@@ -63,6 +63,7 @@ function! s:scan(path) abort "{{{
   return _ + s:scan(fnamemodify(base_path, ':h'))
 endfunction "}}}
 
+
 " Parse lines into rule lists
 " >>> let [s:is_root, s:lists] = s:parse(['root = false', '[*]', 'indent_size = 2'])
 " >>> echo s:is_root
@@ -71,8 +72,12 @@ endfunction "}}}
 " *
 " >>> echo s:lists[0][1]
 " {'indent_size': 2}
+" >>> let g:editorconfig_verbose = 1
 " >>> echo s:parse(['root = false', '[*', 'indent_size = 2'])
 " Vim(echoerr):editorconfig: failed to parse [*
+" >>> let g:editorconfig_verbose = 0
+" >>> echo s:parse(['root = false', '[*', 'indent_size = 2'])
+" [0, []]
 
 function! s:parse(lines) abort "{{{
   let [unparsed, is_root] = s:parse_properties(a:lines)
@@ -90,8 +95,12 @@ endfunction "}}}
 " [[], '']
 " >>> echo s:parse_pattern(['[*.vim]', 'abc'])
 " [['abc'], '*.vim']
+" >>> let g:editorconfig_verbose = 1
 " >>> echo s:parse_pattern(['[]', ''])
 " Vim(echoerr):editorconfig: failed to parse []
+" >>> let g:editorconfig_verbose = 0
+" >>> echo s:parse_pattern(['[]', ''])
+" [[], '']
 
 function! s:parse_pattern(lines) abort "{{{
   if !len(a:lines) | return [[], ''] | endif
