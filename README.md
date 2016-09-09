@@ -57,12 +57,12 @@ local_vimrc = .local.vimrc
 Options
 -------
 
-### g:editorconfig_warn_unsupported_properties
+### g:editorconfig_verbose
 
-Set this if you want to be warned if unsupported properties are used.
+Show verbose messages
 
 ```vim
-let g:editorconfig_warn_unsupported_properties = 1
+let g:editorconfig_verbose = 1
 ```
 
 Install
