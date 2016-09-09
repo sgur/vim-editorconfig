@@ -54,6 +54,17 @@ It behaves like [thinca/vim-localrc](https://github.com/thinca/vim-localrc).
 local_vimrc = .local.vimrc
 ```
 
+Options
+-------
+
+### g:editorconfig_warn_unsupported_properties
+
+Set this if you want to be warned if unsupported properties are used.
+
+```vim
+let g:editorconfig_warn_unsupported_properties = 1
+```
+
 Install
 -------
 

@@ -20,7 +20,16 @@ function! editorconfig#load() abort
   let props = s:filter_matched(rule, filepath)
   if empty(props) | return | endif
   let b:editorconfig = props
-  call s:apply(props)
+  let unsupported = s:apply(props)
+  if empty(unsupported)
+    return
+  endif
+  for key in unsupported
+    let b:editorconfig[key] = 'UNSUPPORTED'
+  endfor
+  if get(g:, 'editorconfig_warn_unsupported_properties', 0)
+    echohl WarningMsg | echomsg 'editorconfig: Unsupported property:' join(unsupported, ',') | echohl NONE
+  endif
 endfunction
 
 function! editorconfig#omnifunc(findstart, base) abort
@@ -180,13 +189,15 @@ function! s:set_cwd(dir) abort "{{{
 endfunction "}}}
 
 function! s:apply(property) abort "{{{
+  let unsupported_keys = []
   for [key, val] in items(a:property)
     try
       call editorconfig#{tolower(key)}#execute(val)
     catch /^Vim\%((\a\+)\)\=:E117/
-      echohl WarningMsg | echomsg 'editorconfig: Unsupported property:' key | echohl NONE
+      let unsupported_keys += [key]
     endtry
   endfor
+  return unsupported_keys
 endfunction "}}}
 
 function! s:filter_matched(rule, path) abort "{{{
