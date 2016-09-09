@@ -27,6 +27,9 @@ function! editorconfig#load() abort
   for key in unsupported
     let b:editorconfig[key] = 'UNSUPPORTED'
   endfor
+  if get(g:, 'editorconfig_warn_unsupported_properties', 0)
+    echohl WarningMsg | echomsg 'editorconfig: Unsupported property:' join(unsupported, ',') | echohl NONE
+  endif
 endfunction
 
 function! editorconfig#omnifunc(findstart, base) abort
