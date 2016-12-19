@@ -167,7 +167,7 @@ function! s:eval(val) abort "{{{
 endfunction "}}}
 
 function! s:properties() abort "{{{
-  return map(s:globpath(s:scriptdir, '*.vim'), 'fnamemodify(v:val, ":t:r")')
+  return map(s:globpath(&runtimepath, 'autoload/editorconfig/*.vim'), 'fnamemodify(v:val, ":t:r")')
 endfunction "}}}
 
 function! s:globpath(path, expr) abort "{{{
