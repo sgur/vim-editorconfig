@@ -1,1 +1,1 @@
-autocmd BufRead,BufNewFile .editorconfig  setfiletype editorconfig | setlocal syntax=dosini
+autocmd BufRead,BufNewFile .editorconfig  setlocal filetype=editorconfig syntax=dosini
