@@ -143,7 +143,7 @@ function! s:parse_properties(lines) abort "{{{
     endif
 
     " Parse properties
-    let splitted = split(line, '\s*=\s*')
+    let splitted = split(matchstr(line, '^\s*\zs\S.*\S\ze\s*$'), '\s*=\s*')
     if len(splitted) < 2
       if get(g:, 'editorconfig_verbose', 0)
         echoerr printf('editorconfig: failed to parse %s', line)
