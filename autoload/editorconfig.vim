@@ -215,7 +215,7 @@ endfunction "}}}
 
 function! s:filter_matched(rule, path) abort "{{{
   let _ = {}
-  call map(filter(copy(a:rule), 'a:path =~ s:regexp(v:val[0])'), 'extend(_, v:val[1], "keep")')
+  call map(filter(copy(a:rule), 'a:path =~ s:regexp(v:val[0])'), 'extend(_, v:val[1], "force")')
   return _
 endfunction "}}}
 
