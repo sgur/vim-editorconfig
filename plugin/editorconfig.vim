@@ -13,6 +13,9 @@ set cpo&vim
 
 let g:editorconfig_root_chdir = get(g:, 'editorconfig_root_chdir', 0)
 
+" g:editorconfig_blacklist : {'filetype': [], 'pattern': []}
+let g:editorconfig_blacklist = get(g:, 'editorconfig_blacklist', {})
+
 augroup plugin-editorconfig
   autocmd!
   " autocmd VimEnter * nested

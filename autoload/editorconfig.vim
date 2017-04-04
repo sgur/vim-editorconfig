@@ -9,6 +9,7 @@ let s:scriptdir = expand('<sfile>:p:r')
 
 " {{{1 Interfaces
 
+" >>> let g:editorconfig_blacklist = {'filetype': [], 'pattern': []}
 " >>> call editorconfig#load()
 "
 function! editorconfig#load() abort
@@ -16,6 +17,9 @@ function! editorconfig#load() abort
     autocmd!
   augroup END
   let filepath = expand('%:p')
+  if s:blacklist(filepath, &filetype)
+    return
+  endif
   let rule = s:scan(fnamemodify(filepath, ':h'))
   let props = s:filter_matched(rule, filepath)
   if empty(props) | return | endif
@@ -62,7 +66,6 @@ function! s:scan(path) abort "{{{
   endif
   return _ + s:scan(fnamemodify(base_path, ':h'))
 endfunction "}}}
-
 
 " Parse lines into rule lists
 " >>> let [s:is_root, s:lists] = s:parse(['root = false', '[*]', 'indent_size = 2'])
@@ -217,6 +220,32 @@ function! s:filter_matched(rule, path) abort "{{{
   let _ = {}
   call map(filter(copy(a:rule), 'a:path =~ s:regexp(v:val[0])'), 'extend(_, v:val[1], "force")')
   return _
+endfunction "}}}
+
+" >>> let g:editorconfig_blacklist = {'filetype': ['vim'], 'pattern': []}
+" >>> echo s:blacklist('sample1.vim', 'vim')
+" 1
+"
+" >>> let g:editorconfig_blacklist = {'filetype': [], 'pattern': []}
+" >>> echo s:blacklist('sample1.vim', 'vim')
+" 0
+"
+" >>> let g:editorconfig_blacklist = {'filetype': ['^$'], 'pattern': []}
+" >>> echo s:blacklist('sample1.vim', 'vim')
+" 0
+"
+" >>> let g:editorconfig_blacklist = {'filetype': ['vim'], 'pattern': []}
+" >>> echo s:blacklist('sample1.vim', '')
+" 0
+function! s:blacklist(filepath, filetype) abort " {{{
+  if has_key(g:editorconfig_blacklist, 'filetype')
+    return !empty(filter(copy(g:editorconfig_blacklist.filetype),
+          \ 'match(a:filetype, v:val) != -1'))
+  endif
+  if has_key(g:editorconfig_blacklist, 'pattern')
+    return !empty(filter(copy(g:editorconfig_blacklist.pattern), 'match(a:filepath, v:val) != -1'))
+  endif
+  return 0
 endfunction "}}}
 
 function! s:regexp(pattern) abort "{{{
