@@ -67,7 +67,11 @@ let g:editorconfig_blacklist = {
     \ 'pattern': ['\.un~$']}
 ```
 
-### g:editorconfig_verbose
+### g:editorconfig\_root\_chdir
+
+Automatically `:lcd` If `root = true` exists in `.editorconfig`.
+
+### g:editorconfig\_verbose
 
 Show verbose messages
 

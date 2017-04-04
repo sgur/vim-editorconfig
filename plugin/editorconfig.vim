@@ -11,6 +11,7 @@ let g:loaded_editorconfig = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
+" g:editorconfig_root_chdir : 1 or 0
 let g:editorconfig_root_chdir = get(g:, 'editorconfig_root_chdir', 0)
 
 " g:editorconfig_blacklist : {'filetype': [], 'pattern': []}

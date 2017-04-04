@@ -14,7 +14,7 @@ let s:scriptdir = expand('<sfile>:p:r')
 "
 function! editorconfig#load() abort
   augroup plugin-editorconfig-local
-    autocmd!
+    autocmd! * <buffer>
   augroup END
   let filepath = expand('%:p')
   if s:blacklist(filepath, &filetype)
