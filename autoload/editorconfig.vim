@@ -135,6 +135,10 @@ function! s:parse_properties(lines) abort "{{{
     if !empty(m)
       return [[], {}]
     endif
+    let m = matchstr(line, '^;')
+    if !empty(m)
+      return [[], {}]
+    endif
 
     " Parse file formats
     let m = matchstr(line, '^\[\zs.\+\ze\]$')
