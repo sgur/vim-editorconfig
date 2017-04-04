@@ -57,6 +57,16 @@ local_vimrc = .local.vimrc
 Options
 -------
 
+### g:editorconfig\_blacklist
+
+Exclude regexp patterns for filetypes or filepaths
+
+```vim
+let g:editorconfig_blacklist = {
+    \ 'filetype': ['git.*', 'fugitive'],
+    \ 'pattern': ['\.un~$']}
+```
+
 ### g:editorconfig_verbose
 
 Show verbose messages
