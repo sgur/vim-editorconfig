@@ -64,7 +64,7 @@ function! s:scan(path) abort "{{{
     call s:set_cwd(base_path)
     return _
   endif
-  return _ + s:scan(fnamemodify(base_path, ':h'))
+  return s:scan(fnamemodify(base_path, ':h')) + _
 endfunction "}}}
 
 " Parse lines into rule lists
