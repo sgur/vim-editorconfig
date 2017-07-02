@@ -23,6 +23,7 @@ function! editorconfig#load() abort
   let rule = s:scan(fnamemodify(filepath, ':h'))
   let props = s:filter_matched(rule, filepath)
   if empty(props) | return | endif
+  call s:fill_defaults(props)
   let b:editorconfig = props
   let unsupported = s:apply(props)
   if empty(unsupported)
@@ -162,6 +163,16 @@ function! s:parse_properties(lines) abort "{{{
 
   endfor
   return [a:lines[i+1 :], _]
+endfunction "}}}
+
+let s:defaults = {'tab_width': 'indent_size'}
+
+function! s:fill_defaults(props) abort "{{{
+  for prop in keys(s:defaults)
+    if (!has_key(a:props, prop) && has_key(a:props, s:defaults[prop]))
+      let a:props[prop] = a:props[s:defaults[prop]]
+    endif
+  endfor
 endfunction "}}}
 
 " >>> echo s:eval('2')
