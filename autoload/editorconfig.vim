@@ -203,9 +203,11 @@ endfunction "}}}
 "
 " >>> echo s:remove_comment('bar')
 " bar
+" >>> echo s:remove_comment('#')
+"
 
 function! s:remove_comment(line) abort "{{{
-  let pos = match(a:line, '\s*[;#].\+')
+  let pos = match(a:line, '\s*[;#].*')
   return pos == -1 ? a:line : pos == 0 ? '' : a:line[: pos-1]
 endfunction "}}}
 
