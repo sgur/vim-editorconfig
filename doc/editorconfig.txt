@@ -50,7 +50,7 @@ for details.
 - indent_size
 - indent_style
 - insert_final_newline
-- max_line_lengwth
+- max_line_length
 - root
 - tab_width
 - trim_trailing_whitespace
@@ -83,7 +83,7 @@ CUSTOMIZING					*editorconfig-customizing*
 
 g:editorconfig_root_chdir			*g:editorconfig_root_chdir*
 	If this option is enabled, The directory where 'root = true' is
-	specified in the .editorconfig is used for|lcd|after opening buffer.
+	specified in the .editorconfig is used for |lcd| after opening buffer.
 
 	default: 0
 
@@ -92,9 +92,9 @@ g:editorconfig_root_chdir			*g:editorconfig_root_chdir*
 <
 
 g:editorconfig_verbose
-	If enabled, Parse errors are reported by|echoerr|
+	If enabled, Parse errors are reported by |echoerr|
 
-	defualt: 0
+	default: 0
 >
  let g:editorconfig_verbose = 1
 <
@@ -148,7 +148,7 @@ CHANGELOG					*editorconfig-changelog*
 	- Tested through "editorconfig/editorconfig-plugin-tests"
 	- Suppress errors unless g:editorconfig_verbose
 0.4.0
-	- Improve insert_final_newline support using|fixendofline|
+	- Improve insert_final_newline support using |fixendofline|
 	- Fix bugs for buffer-local autocmds
 
 0.3.0
@@ -157,7 +157,7 @@ CHANGELOG					*editorconfig-changelog*
 	- Support max_line_length property
 
 0.2.0
-	- New option:|g:editorconfig_root_chdir|
+	- New option: |g:editorconfig_root_chdir|
 
 0.1.0
 	- Initial version.
