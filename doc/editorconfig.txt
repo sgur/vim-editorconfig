@@ -1,6 +1,6 @@
 *editorconfig.txt*	EditorConfig for Vim
 
-Version: 0.5.0
+Version: 0.6.0
 Author : sgur
 License: MIT License
 
@@ -55,6 +55,9 @@ for details.
 - tab_width
 - trim_trailing_whitespace
 - local_vimrc
+- c_include_path
+- spell_enabled (experimental)
+- spell_language (experimental)
 
 local_vimrc
 -----------
@@ -80,6 +83,16 @@ editorconfig#load({fnames})	*editorconfig#load()*
 
 ==============================================================================
 CUSTOMIZING					*editorconfig-customizing*
+
+g:editorconfig_blacklist			*g:editorconfig_blacklist*
+
+	Set this option to exclude regexp patterns for filetypes or filepaths
+
+>
+ let g:editorconfig_blacklist = {
+    \ 'filetype': ['git.*', 'fugitive'],
+    \ 'pattern': ['\.un~$']}
+<
 
 g:editorconfig_root_chdir			*g:editorconfig_root_chdir*
 	If this option is enabled, The directory where 'root = true' is
@@ -144,6 +157,11 @@ Examples of configuration file.
 ==============================================================================
 CHANGELOG					*editorconfig-changelog*
 
+0.6.0
+	- New property: local_vimrc, c_include_path
+	- Add experimental property: spell_enabled, spell_language
+	- Add blacklist option: |g:editorconfig_blacklist|
+	- Fix bugs
 0.5.0
 	- Tested through "editorconfig/editorconfig-plugin-tests"
 	- Suppress errors unless g:editorconfig_verbose
