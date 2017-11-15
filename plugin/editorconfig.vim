@@ -21,8 +21,7 @@ augroup plugin-editorconfig
   autocmd!
   " autocmd VimEnter * nested
   "       \ if !argc() | call editorconfig#load() | endif
-  autocmd BufNewFile,BufReadPost * nested
-        \ if isdirectory(expand('%:p:h')) | call editorconfig#load() | endif
+  autocmd BufNewFile,BufReadPost * nested  call editorconfig#load()
 augroup END
 
 let &cpo = s:save_cpo
