@@ -61,8 +61,9 @@ function! s:scan(path) abort "{{{
   endif
   let base_path = fnamemodify(editorconfig, ':p:h')
   let [is_root, _] = s:parse(s:trim(readfile(editorconfig)))
-  " HACK: Improve later
-  let _[0][1] = s:resolve_local_vimrc_path(base_path, _[0][1])
+  if !empty(_) " HACK: Improve later
+    let _[0][1] = s:resolve_local_vimrc_path(base_path, _[0][1])
+  endif
   if is_root
     call s:set_cwd(base_path)
     return _
