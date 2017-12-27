@@ -16,6 +16,10 @@ function! editorconfig#load() abort
   augroup plugin-editorconfig-local
     autocmd! * <buffer>
   augroup END
+  if !&modifiable
+    " Ignore nomodifiable files
+    return
+  endif
   let filepath = expand('%:p')
   if s:blacklist(filepath, &filetype)
     return
