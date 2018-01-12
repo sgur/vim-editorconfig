@@ -20,7 +20,10 @@ Description
 
 Properties below are enabled only in this plugin:
 
+- `c_include_path`
 - `local_vimrc`
+- `spell_enabled`
+- `spell_language`
 
 V.S.
 ----
