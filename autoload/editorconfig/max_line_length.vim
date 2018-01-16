@@ -10,6 +10,12 @@ function! editorconfig#max_line_length#execute(value) abort
   " number
   if type(a:value) == type(0)
     execute 'setlocal textwidth=' . a:value
+  elseif a:value == 'off'
+    " https://github.com/editorconfig/editorconfig/wiki/EditorConfig-Properties
+    " says it should 'use the editor settings', which I guess means in
+    " our case to do nothing.
+    " So, this elseif is here only to accept value 'off' and not
+    " complain about it.
   elseif get(g:, 'editorconfig_verbose', 0)
     echoerr printf('editroconfig: unsupported value: max_line_length=%s', a:value)
   endif
