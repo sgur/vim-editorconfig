@@ -24,7 +24,7 @@ function! s:bool(value) abort "{{{
   elseif a:value is# 'false'
     return 0
   elseif get(g:, 'editorconfig_verbose', 0)
-    echoerr printf('editroconfig: unsupported value: insert_final_newline=%s', a:value)
+    echoerr printf('editorconfig: unsupported value: insert_final_newline=%s', a:value)
   endif
 endfunction "}}}
 
