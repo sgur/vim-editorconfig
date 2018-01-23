@@ -17,7 +17,7 @@ function! editorconfig#max_line_length#execute(value) abort
     " So, this elseif is here only to accept value 'off' and not
     " complain about it.
   elseif get(g:, 'editorconfig_verbose', 0)
-    echoerr printf('editroconfig: unsupported value: max_line_length=%s', a:value)
+    echoerr printf('editorconfig: unsupported value: max_line_length=%s', a:value)
   endif
 endfunction
 " 1}}}

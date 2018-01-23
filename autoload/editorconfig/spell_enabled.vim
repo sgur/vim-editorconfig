@@ -7,6 +7,6 @@ function! editorconfig#spell_enabled#execute(value) abort
   elseif a:value is# 'false'
     setlocal nospell
   elseif get(g:, 'editorconfig_verbose', 0)
-    echoerr printf('editroconfig: unsupported value: spell_enabled=%s', a:value)
+    echoerr printf('editorconfig: unsupported value: spell_enabled=%s', a:value)
   endif
 endfunction
