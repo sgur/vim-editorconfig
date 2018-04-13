@@ -22,8 +22,6 @@ let g:editorconfig_local_vimrc = get(g:, 'editorconfig_local_vimrc', 0)
 
 augroup plugin-editorconfig
   autocmd!
-  " autocmd VimEnter * nested
-  "       \ if !argc() | call editorconfig#load() | endif
   autocmd BufNewFile,BufReadPost * nested  call editorconfig#load()
 augroup END
 
