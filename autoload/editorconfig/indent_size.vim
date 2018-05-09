@@ -13,9 +13,9 @@ scriptencoding utf-8
 function! editorconfig#indent_size#execute(value) abort
   " [:digit:]+ or 'tab'
   if type(a:value) == type(0)
-    execute 'setlocal shiftwidth=' . a:value
+    let &l:shiftwidth = a:value
   elseif a:value is# 'tab'
-    execute 'setlocal shiftwidth=0'
+    setlocal shiftwidth=0
   elseif get(g:, 'editorconfig_verbose', 0)
     echoerr printf('editorconfig: unsupported value: indent_size=%s', a:value)
   endif

@@ -52,6 +52,14 @@ Source specified vimrc file when you edit a buffer.
 
 It behaves like [thinca/vim-localrc](https://github.com/thinca/vim-localrc).
 
+Enable the `g:editorconfig_local_vimrc` option.
+
+```vim
+let g:editorconfig_local_vimrc = 1
+```
+
+And set the `local_vimrc` property like below to your `.editorconfig`
+
 ```
 [*.md]
 local_vimrc = .local.vimrc

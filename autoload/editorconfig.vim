@@ -76,9 +76,12 @@ function! s:scan(path) abort "{{{
 endfunction "}}}
 
 " Hack for local_vimrc property
+" >>> let g:editorconfig_local_vimrc = 1
 " >>> let s:dict = s:resolve_local_vimrc_path('.', {})
 " >>> echo s:dict
 " {}
+
+" >>> let g:editorconfig_local_vimrc = 1
 " >>> let s:temppath = tempname()
 " >>> call writefile(['1'], s:temppath)
 " >>> let s:tempdir = fnamemodify(s:temppath, ':h')
@@ -87,10 +90,21 @@ endfunction "}}}
 " >>> call delete(s:temppath)
 " >>> echo s:dict == {'local_vimrc': s:temppath}
 " 1
+
+" >>> let g:editorconfig_local_vimrc = 0
+" >>> let s:temppath = tempname()
+" >>> call writefile(['1'], s:temppath)
+" >>> let s:tempdir = fnamemodify(s:temppath, ':h')
+" >>> let s:tempname = fnamemodify(s:temppath, ':t')
+" >>> let s:dict = s:resolve_local_vimrc_path(s:tempdir, {'local_vimrc': s:tempname})
+" >>> call delete(s:temppath)
+" >>> echo s:dict == {'local_vimrc': s:temppath}
+" 0
+
 function! s:resolve_local_vimrc_path(basedir, dict) abort "{{{
   let prop = a:dict
   for k in keys(prop)
-    if k is# 'local_vimrc'
+    if k is# 'local_vimrc' && g:editorconfig_local_vimrc
       if !filereadable(expand(prop[k], 1))
         let prop[k] = simplify(expand(a:basedir . '/' . prop[k], 1))
       endif

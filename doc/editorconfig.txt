@@ -65,6 +65,14 @@ local_vimrc
 The script specified in local_vimrc is loaded whenever you edit files
 which are matched with the pattern.
 
+Enable the `g:editorconfig_local_vimrc` option.
+
+>
+	let g:editorconfig_local_vimrc = 1
+<
+
+And set the `local_vimrc` property like below to your `.editorconfig`
+
 >
 	[*.md]
 	local_vimrc = .local_vimrc
