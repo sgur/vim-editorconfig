@@ -9,7 +9,7 @@ scriptencoding utf-8
 function! editorconfig#max_line_length#execute(value) abort
   " number
   if type(a:value) == type(0)
-    execute 'setlocal textwidth=' . a:value
+    let &l:textwidth = a:value
   elseif a:value == 'off'
     " https://github.com/editorconfig/editorconfig/wiki/EditorConfig-Properties
     " says it should 'use the editor settings', which I guess means in

@@ -12,7 +12,7 @@ function! editorconfig#charset#execute(value) abort
     setlocal fileencoding=utf-8
     setlocal bomb
   else
-    execute 'setlocal fileencoding=' . a:value
+    let &l:fileencoding = a:value
   endif
 endfunction
 " 1}}}
