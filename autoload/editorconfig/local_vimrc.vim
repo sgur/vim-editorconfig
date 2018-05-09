@@ -3,6 +3,10 @@ scriptencoding utf-8
 " vimscript {{{1
 
 function! editorconfig#local_vimrc#execute(value) abort
+  if !g:editorconfig_local_vimrc
+    return
+  endif
+
   let path = fnamemodify(a:value, ':p')
 
   if filereadable(path)
