@@ -52,7 +52,11 @@ endfunction
 
 " {{{1 Inner functions
 
-" >>> let [s:pattern, s:config] = s:scan(expand('%:p:h'))[0]
+" if `root = true` then dirname is located at s:scan(...)[0]
+" >>> let s:root = s:scan(expand('%:p:h'))[0]
+" >>> echo type(s:root) isdirectory(s:root)
+" 1 1
+" >>> let [s:pattern, s:config] = s:scan(expand('%:p:h'))[1]
 " >>> echo s:pattern
 " *.vim
 " >>> echo s:config.insert_final_newline s:config.indent_style s:config.indent_size
@@ -69,8 +73,7 @@ function! s:scan(path) abort "{{{
     let _[0][1] = s:resolve_local_vimrc_path(base_path, _[0][1])
   endif
   if is_root
-    call s:set_cwd(base_path)
-    return _
+    return [['*', {'root': base_path}]] + _
   endif
   return s:scan(fnamemodify(base_path, ':h')) + _
 endfunction "}}}
@@ -243,12 +246,6 @@ endfunction "}}}
 function! s:remove_comment(line) abort "{{{
   let pos = match(a:line, '\s*[;#].*')
   return pos == -1 ? a:line : pos == 0 ? '' : a:line[: pos-1]
-endfunction "}}}
-
-function! s:set_cwd(dir) abort "{{{
-  if g:editorconfig_root_chdir
-    lcd `=a:dir`
-  endif
 endfunction "}}}
 
 function! s:apply(property) abort "{{{
