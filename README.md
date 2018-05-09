@@ -87,7 +87,15 @@ Automatically `:lcd` If `root = true` exists in `.editorconfig`.
 Show verbose messages
 
 ```vim
-let g:editorconfig_verbose = 1
+let g:editorconfig_verbose = 1 " 0 by default
+```
+
+### g:editorconfig\_local\_vimrc
+
+Enable `local_vimrc` property
+
+```vim
+let g:editorconfig_local_vimrc = 1 " 0 by default
 ```
 
 Install
