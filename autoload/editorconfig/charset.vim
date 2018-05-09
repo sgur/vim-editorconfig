@@ -14,7 +14,7 @@ scriptencoding utf-8
 function! editorconfig#charset#execute(value) abort
   " encoding
   if type(a:value) == type("") && a:value !~ '|'
-    let &l:fileencoding = a:value
+    sandbox execute 'setlocal fileencoding=' . a:value
   elseif a:value is? 'utf-8-bom'
     setlocal fileencoding=utf-8
     setlocal bomb
