@@ -13,11 +13,11 @@ scriptencoding utf-8
 
 function! editorconfig#charset#execute(value) abort
   " encoding
-  if type(a:value) == type("") && a:value !~ '|'
-    sandbox execute 'setlocal fileencoding=' . a:value
-  elseif a:value is? 'utf-8-bom'
+  if a:value is? 'utf-8-bom'
     setlocal fileencoding=utf-8
     setlocal bomb
+  elseif type(a:value) == type("") && a:value !~ '|'
+    sandbox execute 'setlocal fileencoding=' . a:value
   elseif get(g:, 'editorconfig_verbose', 0)
     echoerr printf('editorconfig: unsupported value: charset=%s', a:value)
   endif
