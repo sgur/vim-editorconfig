@@ -17,10 +17,18 @@ scriptencoding utf-8
 
 function! editorconfig#spell_language#execute(value) abort
   " [:digit:]+
-  if type(a:value) == type("") && a:value !~ '|'
+  if type(a:value) == type("") && s:lang_available(a:value)
     let &spelllang = a:value
   elseif get(g:, 'editorconfig_verbose', 0)
     echoerr printf('editorconfig: unsupported value: spell_language=%s', a:value)
   endif
 endfunction
+
+function! s:lang_available(value) abort "{{{
+  return !empty(filter(copy(s:languages), 'stridx(a:value, v:val) == 0'))
+endfunction "}}}
+
+let s:languages = map(filter(globpath(&runtimepath, 'spell/*', 1, 1), 'isdirectory(v:val)'), 'fnamemodify(v:val, '':t'')')
+
+
 " 1}}}
