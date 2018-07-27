@@ -39,10 +39,78 @@ function! editorconfig#charset#execute(value) abort
   if a:value is? 'utf-8-bom'
     setlocal fileencoding=utf-8
     setlocal bomb
-  elseif type(a:value) == type("") && a:value !~ '|'
+  elseif type(a:value) == type("") && s:match_encoding_pattern(a:value)
     let &fileencoding = a:value
   elseif get(g:, 'editorconfig_verbose', 0)
     echoerr printf('editorconfig: unsupported value: charset=%s', a:value)
   endif
 endfunction
+
+function! s:match_encoding_pattern(enc_name) abort "{{{
+  if index(s:encoding, a:enc_name) > -1
+    return 1
+  endif
+
+  for pattern in s:encoding_patterns
+    if a:enc_name =~ pattern
+      return 2
+    endif
+  endfor
+
+  return 0
+endfunction "}}}
+
+let s:encoding = [
+      \ 'latin1',
+      \ 'iso-8859-n',
+      \ 'koi8-r',
+      \ 'koi8-u',
+      \ 'macroman',
+      \ 'cp437',
+      \ 'cp737',
+      \ 'cp775',
+      \ 'cp850',
+      \ 'cp852',
+      \ 'cp855',
+      \ 'cp857',
+      \ 'cp860',
+      \ 'cp861',
+      \ 'cp862',
+      \ 'cp863',
+      \ 'cp865',
+      \ 'cp866',
+      \ 'cp869',
+      \ 'cp874',
+      \ 'cp1250',
+      \ 'cp1251',
+      \ 'cp1253',
+      \ 'cp1254',
+      \ 'cp1255',
+      \ 'cp1256',
+      \ 'cp1257',
+      \ 'cp1258',
+      \ 'cp932',
+      \ 'euc-jp',
+      \ 'sjis',
+      \ 'cp949',
+      \ 'euc-kr',
+      \ 'cp936',
+      \ 'euc-cn',
+      \ 'cp950',
+      \ 'big5',
+      \ 'euc-tw',
+      \ 'utf-8',
+      \ 'ucs-2',
+      \ 'ucs-2le',
+      \ 'utf-16',
+      \ 'utf-16le',
+      \ 'ucs-4',
+      \ 'ucs-4le',
+      \ ]
+let s:encoding_patterns = [
+      \ '^8bit-\S\+$',
+      \ '^2byte-\S\+$',
+      \ '^cp\d\+$',
+      \ ]
+
 " 1}}}
