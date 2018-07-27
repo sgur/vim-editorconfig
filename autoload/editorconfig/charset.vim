@@ -17,7 +17,7 @@ function! editorconfig#charset#execute(value) abort
     setlocal fileencoding=utf-8
     setlocal bomb
   elseif type(a:value) == type("") && a:value !~ '|'
-    sandbox execute 'setlocal fileencoding=' . a:value
+    let &fileencoding = a:value
   elseif get(g:, 'editorconfig_verbose', 0)
     echoerr printf('editorconfig: unsupported value: charset=%s', a:value)
   endif
