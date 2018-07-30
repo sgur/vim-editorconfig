@@ -143,7 +143,7 @@ Examples of configuration file.
 ==============================================================================
 CHANGELOG					*editorconfig-changelog*
 
-0.7.0 (Unreleased)
+0.7.0
 	- Remove property: local_vimrc: may cause security risks
 		 - Please use https://github.com/thinca/vim-localrc instead.
 0.6.0
