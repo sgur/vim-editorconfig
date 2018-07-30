@@ -54,31 +54,9 @@ for details.
 - root
 - tab_width
 - trim_trailing_whitespace
-- local_vimrc
 - c_include_path
 - spell_enabled (experimental)
 - spell_language (experimental)
-
-local_vimrc
------------
-
-The script specified in local_vimrc is loaded whenever you edit files
-which are matched with the pattern.
-
-Enable the `g:editorconfig_local_vimrc` option.
-
->
-	let g:editorconfig_local_vimrc = 1
-<
-
-And set the `local_vimrc` property like below to your `.editorconfig`
-
->
-	[*.md]
-	local_vimrc = .local_vimrc
-<
-
-This idea comes from thinca/vim-localrc.
 
 ==============================================================================
 INTERFACE					*editorconfig-interface*
@@ -165,6 +143,9 @@ Examples of configuration file.
 ==============================================================================
 CHANGELOG					*editorconfig-changelog*
 
+0.7.0 (Unreleased)
+	- Remove property: local_vimrc: may cause security risks
+		 - Please use https://github.com/thinca/vim-localrc instead.
 0.6.0
 	- New property: local_vimrc, c_include_path
 	- Add experimental property: spell_enabled, spell_language
