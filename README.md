@@ -21,7 +21,6 @@ Description
 Properties below are enabled only in this plugin:
 
 - `c_include_path`
-- `local_vimrc`
 - `spell_enabled`
 - `spell_language`
 
@@ -42,28 +41,6 @@ Usage
  1. Install the plugin
  2. Locate `.editorconfig`
  3. Edit some files
-
-Features
--------
-
-### local\_vimrc
-
-Source specified vimrc file when you edit a buffer.
-
-It behaves like [thinca/vim-localrc](https://github.com/thinca/vim-localrc).
-
-Enable the `g:editorconfig_local_vimrc` option.
-
-```vim
-let g:editorconfig_local_vimrc = 1
-```
-
-And set the `local_vimrc` property like below to your `.editorconfig`
-
-```
-[*.md]
-local_vimrc = .local.vimrc
-```
 
 Options
 -------
@@ -88,14 +65,6 @@ Show verbose messages
 
 ```vim
 let g:editorconfig_verbose = 1 " 0 by default
-```
-
-### g:editorconfig\_local\_vimrc
-
-Enable `local_vimrc` property
-
-```vim
-let g:editorconfig_local_vimrc = 1 " 0 by default
 ```
 
 Install
