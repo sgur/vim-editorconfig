@@ -17,6 +17,7 @@ scriptencoding utf-8
 
 function! editorconfig#spell_language#execute(value) abort
   " [:digit:]+
+  echom a:value
   if type(a:value) == type("") && s:lang_available(a:value)
     let &spelllang = a:value
   elseif get(g:, 'editorconfig_verbose', 0)
@@ -25,10 +26,9 @@ function! editorconfig#spell_language#execute(value) abort
 endfunction
 
 function! s:lang_available(value) abort "{{{
-  return !empty(filter(copy(s:languages), 'stridx(a:value, v:val) == 0'))
+  return !empty(filter(copy(s:languages), 'stridx(v:val, a:value) == 0'))
 endfunction "}}}
 
-let s:languages = map(filter(globpath(&runtimepath, 'spell/*', 1, 1), 'isdirectory(v:val)'), 'fnamemodify(v:val, '':t'')')
-
+let s:languages = map(filter(globpath(&runtimepath, 'spell/*', 1, 1), '!isdirectory(v:val)'), 'fnamemodify(v:val, '':t'')')
 
 " 1}}}
