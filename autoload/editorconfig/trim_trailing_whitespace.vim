@@ -25,7 +25,7 @@ endfunction
 function! s:do_trim_trailing_whitespace() abort "{{{
   let view = winsaveview()
   try
-    %s/\s\+$//e
+    keeppatterns %s/\s\+$//e
   finally
     call winrestview(view)
   endtry
