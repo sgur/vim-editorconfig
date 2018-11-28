@@ -25,6 +25,9 @@ function! editorconfig#load() abort
     return
   endif
   let rule = s:scan(fnamemodify(filepath, ':h'))
+  if len(rule) > 0 && has_key(rule[0][1], 'root')
+    let filepath = s:trim_root(filepath, rule[0][1]['root'])
+  endif
   let props = s:filter_matched(rule, filepath)
   if empty(props) | return | endif
   call s:fill_defaults(props)
@@ -172,6 +175,13 @@ function! s:parse_properties(lines) abort "{{{
 
   endfor
   return [a:lines[i+1 :], _]
+endfunction "}}}
+
+function! s:trim_root(filepath, root) abort "{{{
+  if stridx(a:filepath, a:root) == 0
+    return strpart(a:filepath, len(a:root))
+  endif
+  return a:filepath
 endfunction "}}}
 
 let s:defaults = {'tab_width': 'indent_size'}
