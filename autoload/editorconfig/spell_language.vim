@@ -26,7 +26,9 @@ function! editorconfig#spell_language#execute(value) abort
 endfunction
 
 function! s:lang_available(value) abort "{{{
-  return !empty(filter(copy(s:languages), 'stridx(v:val, a:value) == 0'))
+  " We need to accept even dialects of languages, e.g., en_gb
+  let lang = split(a:value, '_')[0]
+  return !empty(filter(copy(s:languages), 'stridx(v:val, lang) == 0'))
 endfunction "}}}
 
 let s:languages = map(filter(globpath(&runtimepath, 'spell/*', 1, 1), '!isdirectory(v:val)'), 'fnamemodify(v:val, '':t'')')
