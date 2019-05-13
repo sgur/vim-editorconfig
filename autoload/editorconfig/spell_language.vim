@@ -20,6 +20,12 @@ function! editorconfig#spell_language#execute(value) abort
   echom a:value
   if type(a:value) == type("") && s:lang_available(a:value)
     let &spelllang = a:value
+
+    " When setting &spelllang we want spelling enabled automatically as
+    " well, no other configuration option is necessary (see
+    " gh#editorconfig/editorconfig#315 for more discussion on this
+    " issue).
+    let &spell = 1
   elseif get(g:, 'editorconfig_verbose', 0)
     echoerr printf('editorconfig: unsupported value: spell_language=%s', a:value)
   endif
