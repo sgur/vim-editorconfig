@@ -1,6 +1,6 @@
 *editorconfig.txt*	EditorConfig for Vim
 
-Version: 0.7.0
+Version: 0.8.0
 Author : sgur
 License: MIT License
 
@@ -55,7 +55,6 @@ for details.
 - tab_width
 - trim_trailing_whitespace
 - c_include_path
-- spell_enabled (experimental)
 - spell_language (experimental)
 
 ==============================================================================
@@ -143,6 +142,9 @@ Examples of configuration file.
 ==============================================================================
 CHANGELOG					*editorconfig-changelog*
 
+0.8.0
+	- Remove property: spell_enabled
+		 - For detail, see https://github.com/editorconfig/editorconfig/issues/315 discussion
 0.7.0
 	- Remove property: local_vimrc: may cause security risks
 		 - Please use https://github.com/thinca/vim-localrc instead.
